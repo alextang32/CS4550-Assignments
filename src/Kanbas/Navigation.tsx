@@ -4,23 +4,22 @@ import { IoCalendarOutline } from "react-icons/io5";
 import { LiaBookSolid, LiaCogSolid } from "react-icons/lia";
 import { FaInbox, FaRegCircleUser } from "react-icons/fa6";
 import { Link } from "react-router-dom";
-
+import "./styles.css";
 export default function KanbasNavigation() {
-  const [selectedLink, setSelectedLink] = useState<string>("/Kanbas/Dashboard"); // Set initial selected link with type string
+  const [selectedLink, setSelectedLink] = useState<string>("/Kanbas/Dashboard");
 
-  // Function to determine link class based on whether it is selected or not
   const getLinkClass = (link: string): string => (
     link === selectedLink 
-      ? "list-group-item text-center border-0 bg-white text-danger" // Selected: White background, Red text
-      : "list-group-item text-white bg-black text-center border-0" // Not Selected: Black background, White text
+      ? "list-group-item text-center border-0 bg-white text-danger" 
+      : "list-group-item text-white bg-black text-center border-0" 
   );
 
-  // Function to determine icon class based on whether it is selected or not, and if it's the Account icon
+
   const getIconClass = (link: string): string => {
     if (link === "/Kanbas/Account") {
-      return link === selectedLink ? "fs-1 text-white" : "fs-1 text-white"; // Account Icon is always white
+      return link === selectedLink ? "fs-1 text-danger" : "fs-1 text-white"; 
     }
-    return "fs-1 text-danger"; // All other icons are red
+    return "fs-1 text-danger"; 
   };
 
   return (
