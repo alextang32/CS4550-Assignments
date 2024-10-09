@@ -21,7 +21,11 @@ export default function Assignments() {
           <BsGripVertical className="me-2 fs-3" />
           <TfiWrite className="me-2 fs-3"/>
           <LessonControlButtons />
-          <span style={{ fontWeight: 'bold' }}>A1</span>
+          <a href="#/Kanbas/Courses/1234/Assignments/123" style={{ textDecoration: 'none', color: 'black'}}>
+        <span style={{ fontWeight: 'bold' }}>
+        A1
+        </span>
+        </a>
           <div style={{ marginLeft: '72px', display: 'flex', flexDirection: 'column' }}>
           <span style={{ color: 'red', fontSize: '0.8em' }}>
             Multiple Modules&nbsp;
@@ -45,7 +49,13 @@ export default function Assignments() {
           <BsGripVertical className="me-2 fs-3" />
           <TfiWrite className="me-2 fs-3"/>
           <LessonControlButtons />
-          <span style={{ fontWeight: 'bold' }}>A2</span>
+          <span style={{ fontWeight: 'bold' }}>
+          <a href="#/Kanbas/Courses/1234/Assignments/123" style={{ textDecoration: 'none', color: 'black'}}>
+        <span style={{ fontWeight: 'bold' }}>
+        A2
+        </span>
+        </a>
+            </span>
           <div style={{ marginLeft: '72px', display: 'flex', flexDirection: 'column' }}>
           <span style={{ color: 'red', fontSize: '0.8em' }}>
             Multiple Modules&nbsp;
@@ -69,7 +79,13 @@ export default function Assignments() {
           <BsGripVertical className="me-2 fs-3" />
           <TfiWrite className="me-2 fs-3"/>
           <LessonControlButtons />
-          <span style={{ fontWeight: 'bold' }}>A3</span>
+          <span style={{ fontWeight: 'bold' }}>
+          <a href="#/Kanbas/Courses/1234/Assignments/123" style={{ textDecoration: 'none', color: 'black'}}>
+        <span style={{ fontWeight: 'bold' }}>
+        A3
+        </span>
+        </a>
+            </span>
           <div style={{ marginLeft: '72px', display: 'flex', flexDirection: 'column' }}>
           <span style={{ color: 'red', fontSize: '0.8em' }}>
             Multiple Modules&nbsp;
