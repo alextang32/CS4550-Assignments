@@ -1,8 +1,12 @@
-import { useParams } from "react-router";
+import { useParams, useLocation } from "react-router";
+import { Link } from "react-router-dom";
+
 import * as db from "../../Database";
 export default function AssignmentEditor() {
-  const { cid } = useParams();
-  const assignments = db.assignments;
+    const { aid } = useParams();
+      const { cid } = useParams();
+    const { pathname } = useLocation();
+    const assignments = db.assignments;
   const description = `The assignment is available online 
 Submit a link to the landing page of your Web application running on Netlify.
 
@@ -14,17 +18,23 @@ The landing page should include the following:
 -Links to all relevant source code repositories
 The Kanbas application should include a link to navigate back to the landing page.
 `;
+console.log(aid)
+console.log(pathname)
   return (
     <div id="wd-assignments-editor">
       <div wd-title p-3 ps-2 bg-secondary>
         Assignment Name </div>
       <div wd-title className="p-3 ps-2 bg-white" style={{ marginBottom: '7px' }}>
+     
+      {assignments
+          .filter((assignment: any) => assignment._id === aid)
+          .map((assignment: any) => (
         <input
           type="text"
-          value="A1"
+          value={assignment.title}
           className="form-control ps-3"
           style={{ width: '100%' }}
-        /> </div>
+        />))} </div>
       <textarea
         value={description}
         className="form-control ps-3"
@@ -136,10 +146,13 @@ The Kanbas application should include a link to navigate back to the landing pag
       </div>
       <hr></hr>
       <div className="form-control ps-3" style={{ display: 'flex', justifyContent: 'flex-end', gap: '10px' }}>
-        <button style={{ width: '120px', padding: '10px', background: 'transparent', border: '1px solid #ccc', cursor: 'pointer', textAlign: 'center' }}>
+ 
+        <button style={{ width: '120px', padding: '10px', background: 'transparent', border: '1px solid #ccc', cursor: 'pointer', textAlign: 'center' }}
+          onClick={() => window.location.href = `/#/Kanbas/Courses/${cid}/Assignments`}>
           Cancel
         </button>
-        <button className="form-control ps-3" style={{ width: '120px', padding: '10px', background: 'red', color: 'white', border: 'none', cursor: 'pointer', textAlign: 'center' }}>
+        <button className="form-control ps-3" style={{ width: '120px', padding: '10px', background: 'red', color: 'white', border: 'none', cursor: 'pointer', textAlign: 'center' }}
+        onClick={() => window.location.href = `/#/Kanbas/Courses/${cid}/Assignments`}>
           Save
         </button>
       </div>
