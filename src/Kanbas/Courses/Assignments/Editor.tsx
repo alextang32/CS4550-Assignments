@@ -1,4 +1,8 @@
+import { useParams } from "react-router";
+import * as db from "../../Database";
 export default function AssignmentEditor() {
+  const { cid } = useParams();
+  const assignments = db.assignments;
   const description = `The assignment is available online 
 Submit a link to the landing page of your Web application running on Netlify.
 
