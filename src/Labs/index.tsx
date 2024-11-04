@@ -4,8 +4,11 @@ import TOC from "./TOC";
 import Lab2 from "./Lab2";
 import Lab3 from "./Lab3";
 import Lab4 from "./Lab4";
+import store from "./store";
+import { Provider } from "react-redux";
 export default function Labs() {
   return (
+    <Provider store={store}>
     <div id="wd-labs">
       <h1>Labs</h1>
       <h2>Alex Tang</h2>
@@ -19,4 +22,5 @@ export default function Labs() {
         <Route path="Lab4/*" element={<Lab4 />} />
       </Routes>
     </div>
+    </Provider>
 );}
