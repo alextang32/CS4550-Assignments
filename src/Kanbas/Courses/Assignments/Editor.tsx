@@ -1,44 +1,80 @@
-import { useParams, useLocation } from "react-router";
+import { useParams, useLocation, useNavigate } from "react-router";
 import { Link } from "react-router-dom";
-
+import { useDispatch, useSelector } from "react-redux";
+import { useState } from "react";
 import * as db from "../../Database";
+import {addAssignment, updateAssignment } from "./reducer";
 export default function AssignmentEditor() {
+  const [_id, setId] = useState("");
+  const [title, setTitle] = useState("");
+  const [course, setCourse] = useState("");
+  const [description, setDescription] = useState("");
+  const [points, setPoints] = useState(0);
+  const [dueDate, setDueDate] = useState("");
+  const [availableDate, setAvailableDate] = useState("");
+
     const { aid } = useParams();
-      const { cid } = useParams();
+    const { cid } = useParams();
     const { pathname } = useLocation();
-    const assignments = db.assignments;
-  const description = `The assignment is available online 
-Submit a link to the landing page of your Web application running on Netlify.
-
-The landing page should include the following:
-
--Your full name and section
--Links to each of the lab assignments
--Link to the Kanbas application
--Links to all relevant source code repositories
-The Kanbas application should include a link to navigate back to the landing page.
-`;
+    
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
+    const { assignments } = useSelector((state: any) => state.assignmentReducer);
 console.log(aid)
 console.log(pathname)
+const isEditing = aid === "Create" ? false : true;
+
+const existing = assignments.find((assignment: any) => assignment._id === aid);
+if (existing && _id === "") {
+    setId(existing._id);
+    setTitle(existing.title);
+    setCourse(existing.course);
+    setDescription(existing.description);
+    setPoints(existing.points);
+    setDueDate(existing.dueDate);
+    setAvailableDate(existing.availableDate);
+}
+
+function saveAssignment(){
+  const assignment = {
+    _id,
+    title,
+    course,
+    description,
+    points,
+    dueDate,
+    availableDate,
+  };
+    if (isEditing) {
+      dispatch(updateAssignment(assignment));
+    } else {
+      dispatch(addAssignment(assignment));
+    }
+    navigate(`/Kanbas/Courses/${ cid }/Assignments`);
+  }
+ 
+
+
+
   return (
     <div id="wd-assignments-editor">
       <div wd-title p-3 ps-2 bg-secondary>
         Assignment Name </div>
       <div wd-title className="p-3 ps-2 bg-white" style={{ marginBottom: '7px' }}>
      
-      {assignments
-          .filter((assignment: any) => assignment._id === aid)
-          .map((assignment: any) => (
+
         <input
           type="text"
-          value={assignment.title}
+          value={title}
           className="form-control ps-3"
           style={{ width: '100%' }}
-        />))} </div>
+          onChange={(e) => setTitle(e.target.value)}
+        /> </div>
       <textarea
         value={description}
         className="form-control ps-3"
         style={{ width: '100%', height: '280px' }}
+        onChange={(e) => setDescription(e.target.value)}
       />
       <div wd-title p-3 ps-2 bg-secondary style={{ display: 'flex', marginBottom: '15px' }}>
         <span style={{ marginRight: '10px', marginBottom: '15px', marginTop: '7px' }}>Points</span>
@@ -152,7 +188,7 @@ console.log(pathname)
           Cancel
         </button>
         <button className="form-control ps-3" style={{ width: '120px', padding: '10px', background: 'red', color: 'white', border: 'none', cursor: 'pointer', textAlign: 'center' }}
-        onClick={() => window.location.href = `/#/Kanbas/Courses/${cid}/Assignments`}>
+        onClick={saveAssignment}>
           Save
         </button>
       </div>
