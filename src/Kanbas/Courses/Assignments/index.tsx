@@ -6,10 +6,18 @@ import { TfiWrite } from "react-icons/tfi";
 import { IoMdArrowDropdown } from "react-icons/io";
 import { useParams } from "react-router";
 import * as db from "../../Database";
-
+import { useDispatch, useSelector } from "react-redux";
+import { useState } from "react";
+import { deleteAssignment } from "./reducer";
 export default function Assignments() {
+ 
   const { cid } = useParams();
-  const assignments = db.assignments;
+  const dispatch = useDispatch();
+  const { assignments } = useSelector((state: any) => state.assignmentReducer);
+  const courseAssignments = assignments.filter((assignment: any) => assignment.course === cid);
+  const [assignmentToDelete, setAssignmentToDelete] = useState("");
+ 
+
   return (
     <div id="wd-assignments">
       <ModulesControls /><br /><br /><br /><br />

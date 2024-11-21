@@ -1,7 +1,8 @@
 import { FaPlus } from "react-icons/fa6";
 import {MdSearch } from "react-icons/md";
-
+import {useParams} from "react-router";
 export default function AssignmentControls() {
+  const { cid } = useParams();
   return (
     <div id="wd-assignment-controls" className="d-flex align-items-center justify-content-end text-nowrap">
       <div className="position-relative me-3" style={{ width: '250px' }}>
@@ -18,7 +19,9 @@ export default function AssignmentControls() {
         <FaPlus className="position-relative me-2" style={{ bottom: "1px" }} />
         Group
       </button>
-      <button id="wd-add-module-btn" className="btn btn-lg btn-danger me-2">
+      <button id="wd-add-module-btn"
+        onClick={() => window.location.href = `/#/Kanbas/Courses/${cid}/Assignments/Create`}
+         className="btn btn-lg btn-danger me-2">
         <FaPlus className="position-relative me-2" style={{ bottom: "1px" }} />
         Assignment
       </button>
