@@ -4,6 +4,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { useState } from "react";
 import * as db from "../../Database";
 import {addAssignment, updateAssignment } from "./reducer";
+import * as coursesClient from "../client";
+import * as assignmentsClient from "./client";
 export default function AssignmentEditor() {
   const [_id, setId] = useState("");
   const [title, setTitle] = useState("");
@@ -35,7 +37,7 @@ if (existing && _id === "") {
     setAvailableDate(existing.availableDate);
 }
 
-function saveAssignment(){
+async function saveAssignment(){
   const assignment = {
     _id,
     title,
@@ -46,9 +48,12 @@ function saveAssignment(){
     availableDate,
   };
     if (isEditing) {
+      await assignmentsClient.updateAssignment(assignment)
       dispatch(updateAssignment(assignment));
     } else {
-      dispatch(addAssignment(assignment));
+      assignment.course = cid!;
+      const newAssignment = await coursesClient.createAssignmentForCourse(cid!, assignment);
+      dispatch(addAssignment(newAssignment));
     }
     navigate(`/Kanbas/Courses/${ cid }/Assignments`);
   }

@@ -7,8 +7,10 @@ import { IoMdArrowDropdown } from "react-icons/io";
 import { useParams } from "react-router";
 import * as db from "../../Database";
 import { useDispatch, useSelector } from "react-redux";
-import { useState } from "react";
-import { deleteAssignment } from "./reducer";
+import { useState, useEffect } from "react";
+import * as coursesClient from "../client";
+import * as assignmentsClient from "./client";
+import { setAssignments, addAssignment, updateAssignment, deleteAssignment } from "./reducer";
 export default function Assignments() {
  
   const { cid } = useParams();
@@ -16,14 +18,24 @@ export default function Assignments() {
   const { assignments } = useSelector((state: any) => state.assignmentReducer);
   const courseAssignments = assignments.filter((assignment: any) => assignment.course === cid);
   const [assignmentToDelete, setAssignmentToDelete] = useState("");
- 
+  const fetchAssignments = async () => {
+    const Assignments = await coursesClient.findAssignmentsForCourse(cid as string);
+    dispatch(setAssignments(Assignments));
+  };
+  useEffect(() => {
+    fetchAssignments();
+  }, []);
+
+  const removeAssignment = async (assignmentId: string) => {
+    await assignmentsClient.deleteAssignment(assignmentId);
+    dispatch(deleteAssignment(assignmentId));
+  };
 
   return (
     <div id="wd-assignments">
       <ModulesControls /><br /><br /><br /><br />
       <ul id="wd-modules" className="list-group rounded-0">
         {assignments
-          .filter((assignment: any) => assignment.course === cid)
           .map((assignment: any) => (
             <li className="wd-module list-group-item p-0 mb-5 fs-5 border-gray" key={assignment._id}>
               <div className="wd-title p-3 ps-2 bg-secondary">
